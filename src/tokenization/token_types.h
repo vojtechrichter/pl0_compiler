@@ -1,0 +1,36 @@
+#ifndef PL0_COMPILER_TOKENIZATION_TOKEN_TYPES_H
+#define PL0_COMPILER_TOKENIZATION_TOKEN_TYPES_H
+
+#define VAR 257
+#define COMMA 258
+#define SEMICOLON 259
+#define BEGIN 260
+#define IDENT 261
+#define ASSIGNMENT 262
+#define WHILE 263
+#define DO 264
+#define LESSTHAN 265
+#define GREATERTHAN 266
+#define STAR 267
+#define FSLASH 268
+#define PLUS 269
+#define MINUS 270
+#define EQUAL 271
+#define END 272
+#define DOT 273
+#define LPAREN 274
+#define RPAREN 275
+#define IF 276
+#define THEN 277
+#define ODD 278
+#define PROCEDURE 279
+#define CONST 280
+#define CALL 281
+#define EXCLMP 282
+#define QSTN_MARK 283
+#define HASH 284
+#define LESSTHAN_EQ 285
+#define GREATERTHAN_EQ 286
+#define NUMBER 287
+
+#endif // PL0_COMPILER_TOKENIZATION_TOKEN_TYPES_H
