@@ -1,13 +1,13 @@
 #ifndef PL0_COMPILER_TOKENIZATION_SCANNER_H
 #define PL0_COMPILER_TOKENIZATION_SCANNER_H
 
-#define CURRCHAR(s) \
-    s->src_code[s->idx]
-
 #include "token_types.h"
 
 #include <inttypes.h>
 #include <assert.h>
+
+#define CURRCHAR(s) \
+    s->src_code[s->idx]
 
 typedef struct Scanner {
     char *src_code;
