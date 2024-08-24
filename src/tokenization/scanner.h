@@ -33,6 +33,7 @@ uint8_t scanner_peek_prev_by(Scanner *scanner, size_t pos_from_current_idx);
 void scanner_return_to_prev(Scanner *scanner);
 void scanner_return_by(Scanner *scanner, size_t pos_from_current_idx);
 void scanner_reset(Scanner *scanner);
-char **scanner_tokenize_source(Scanner *scanner);
+uint32_t resolve_token(uint8_t c, Scanner *scanner);
+uint32_t *scanner_tokenize_source(Scanner *scanner);
 
 #endif // PL0_COMPILER_TOKENIZATION_SCANNER_H
