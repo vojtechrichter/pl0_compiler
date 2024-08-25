@@ -120,6 +120,8 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
             return TOKEN_SEMICOLON;
         }
 
+        // TODO: make a functionality for matching multi-character tokens, since
+        // this is horendous
         case 'b': {
             scanner_advance(scanner);
             if (CURRCHAR(scanner) == 'e') {
@@ -208,7 +210,78 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
             return TOKEN_DOT;
         }
 
+        case '(': {
+            return TOKEN_LPAREN;
+        }
+
+        case ')': {
+            return TOKEN_RPAREN;
+        }
+
+        case 'i': {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'f') {
+                return TOKEN_IF;
+            }
+        }
+
+        case 't': {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'h') {
+                scanner_advance(scanner);
+                if (CURRCHAR(scanner) == 'e') {
+                    scanner_advance(scanner);
+                    if (CURRCHAR(scanner) == 'n') {
+                        return TOKEN_THEN;
+                    }
+                }
+            }
+        }
+
+        case 'o': {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'd') {
+                scanner_advance(scanner);
+                if (CURRCHAR(scanner) == 'd') {
+                    return TOKEN_ODD;
+                }
+            }
+        }
+
+        // TODO: when the case fails to match in one of the middle if statements for example,
+        // the next case will receive the nth character from the processed one, which
+        // skips characters. FIX: either only peek forward, or return back n number of
+        // characters, after each non-matched if condition
+        case 'p': {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'r') {
+                scanner_advance(scanner);
+                if (CURRCHAR(scanner) == 'o') {
+                    scanner_advance(scanner);
+                    if (CURRCHAR(scanner) == 'c') {
+                        scanner_advance(scanner);
+                        if (CURRCHAR(scanner) == 'e') {
+                            scanner_advance(scanner);
+                            if (CURRCHAR(scanner) == 'd') {
+                                scanner_advance(scanner);
+                                if (CURRCHAR(scanner) == 'u') {
+                                    scanner_advance(scanner);
+                                    if (CURRCHAR(scanner) == 'r') {
+                                        scanner_advance(scanner);
+                                        if (CURRCHAR(scanner) == 'e') {
+                                            return TOKEN_PROCEDURE;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         default: {
+            // TODO: check if can be ident, otherwise unknown
             return TOKEN_UNKNOWN;
         }
     }
