@@ -103,10 +103,10 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
 {
     switch (c) {
         case 'v': {
-            uint8_t next_char = scanner_advance(scanner);
-            if (next_char == 'a') {
-                next_char = scanner_advance(scanner);
-                if (next_char == 'r') {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'a') {
+                scanner_advance(scanner);
+                if (CURRCHAR(scanner) == 'r') {
                     return TOKEN_VAR;
                 }
             }
@@ -121,14 +121,14 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
         }
 
         case 'b': {
-            uint8_t next_char = scanner_advance(scanner);
-            if (next_char == 'e') {
-                next_char = scanner_advance(scanner);
-                if (next_char == 'g') {
-                    next_char = scanner_advance(scanner);
-                    if (next_char == 'i') {
-                        next_char = scanner_advance(scanner);
-                        if (next_char == 'n') {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'e') {
+                scanner_advance(scanner);
+                if (CURRCHAR(scanner) == 'g') {
+                    scanner_advance(scanner);
+                    if (CURRCHAR(scanner) == 'i') {
+                        scanner_advance(scanner);
+                        if (CURRCHAR(scanner) == 'n') {
                             return TOKEN_BEGIN;
                         }
                     }
@@ -137,21 +137,21 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
         }
 
         case ':': {
-			uint8_t next_char = scanner_advance(scanner);
-			if (next_char == '=') {
+            scanner_advance(scanner);
+			if (CURRCHAR(scanner) == '=') {
 				return TOKEN_ASSIGNMENT;
 			}
         }
 
 		case 'w': {
-			uint8_t next_char = scanner_advance(scanner);
-			if (next_char == 'h') {
-				next_char = scanner_advance(scanner);
-				if (next_char == 'i') {
-					next_char = scanner_advance(scanner);
-					if (next_char == 'l') {
-						next_char = scanner_advance(scanner);
-						if (next_char == 'e') {
+			scanner_advance(scanner);
+			if (CURRCHAR(scanner) == 'h') {
+				scanner_advance(scanner);
+				if (CURRCHAR(scanner) == 'i') {
+					scanner_advance(scanner);
+					if (CURRCHAR(scanner) == 'l') {
+						scanner_advance(scanner);
+						if (CURRCHAR(scanner) == 'e') {
 							return TOKEN_WHILE;
 						}
 					}
@@ -160,8 +160,8 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
 		}
 
 		case 'd': {
-            uint8_t next_char = scanner_advance(scanner);
-            if (next_char == 'o') {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'o') {
                 return TOKEN_DO;
             }
 		}
@@ -195,10 +195,10 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
         }
 
         case 'e': {
-            uint8_t next_char = scanner_advance(scanner);
-            if (next_char == 'n') {
-                next_char = scanner_advance(scanner);
-                if (next_char == 'd') {
+            scanner_advance(scanner);
+            if (CURRCHAR(scanner) == 'n') {
+                scanner_advance(scanner);
+                if (CURRCHAR(scanner) == 'd') {
                     return TOKEN_END;
                 }
             }
@@ -207,6 +207,10 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
         case '.': {
             return TOKEN_DOT;
         }
+
+        default: {
+            return TOKEN_UNKNOWN;
+        }
     }
 }
 
@@ -214,7 +218,7 @@ uint32_t *scanner_tokenize_source(Scanner *scanner)
 {
     uint32_t *tokens = (uint32_t *)malloc(scanner->src_size * sizeof(uint32_t));
 
-    while (scanner->idx != (src_size - 1)) {
+    while (scanner->idx != (scanner->src_size - 1)) {
         tokens[scanner->idx] = resolve_token(scanner->current_char, scanner);
     }
 
