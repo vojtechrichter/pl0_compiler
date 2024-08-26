@@ -9,7 +9,7 @@ size_t get_src_file_size(const char *file_path)
     }
 
     handle_err("Couldn't get file size of source file %s\n", file_path);
-    return((size_t)NULL);
+    return 0;
 }
 
 void read_src_file(const char *file_path, char *buffer)
@@ -19,14 +19,16 @@ void read_src_file(const char *file_path, char *buffer)
     int fd = open(file_path, O_RDWR, 0666);
     size_t bytes_read = read(fd, buffer, file_size);
     if (bytes_read == -1) {
+        perror("read() error: ");
         handle_err("Failed to read the source file %s\n", file_path);
     }
 }
 
 Scanner *scanner_init(const char *file_path, Scanner *scanner)
 {
-    read_src_file(file_path, scanner->src_code);
     scanner->src_size = get_src_file_size(file_path);
+    scanner->src_code = (char *)malloc(scanner->src_size);
+    read_src_file(file_path, scanner->src_code);
     scanner->idx = 0;
     scanner->current_char = CURRCHAR(scanner);
 
@@ -314,6 +316,7 @@ uint32_t *scanner_tokenize_source(Scanner *scanner)
 
     while (scanner->idx != (scanner->src_size - 1)) {
         tokens[scanner->idx] = resolve_token(scanner->current_char, scanner);
+        scanner_advance(scanner);
     }
 
     return tokens;
