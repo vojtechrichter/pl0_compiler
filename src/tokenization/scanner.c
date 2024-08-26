@@ -99,6 +99,26 @@ void scanner_reset(Scanner *scanner)
     scanner->current_char = CURRCHAR(scanner);
 }
 
+uint32_t
+try_match_multichar_token(
+        Scanner *s,
+        const char *target_str,
+        size_t str_len,
+        uint32_t token_type
+        )
+{
+    uint8_t cc = s->current_char;
+    for (int i = 0; i < str_len; i++) {
+        if (cc != target_str[i]) {
+            return COULD_NOT_MATCH_TOKEN;
+        }
+
+        cc = scanner_peek_next_by(s, i + 1);
+    }
+
+    return token_type;
+}
+
 uint32_t resolve_token(uint8_t c, Scanner *scanner)
 {
     switch (c) {
@@ -123,6 +143,7 @@ uint32_t resolve_token(uint8_t c, Scanner *scanner)
         // TODO: make a functionality for matching multi-character tokens, since
         // this is horendous
         case 'b': {
+            // return try_match_multichar_token(scanner, "begin", 5, TOKEN_BEGIN);
             scanner_advance(scanner);
             if (CURRCHAR(scanner) == 'e') {
                 scanner_advance(scanner);

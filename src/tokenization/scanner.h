@@ -14,6 +14,8 @@
 #define CURRCHAR(s) \
     s->src_code[s->idx]
 
+#define COULD_NOT_MATCH_TOKEN 1
+
 typedef struct Scanner Scanner;
 struct Scanner
 {
