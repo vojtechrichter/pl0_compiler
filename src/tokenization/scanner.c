@@ -19,9 +19,11 @@ void read_src_file(const char *file_path, char *buffer)
     int fd = open(file_path, O_RDWR, 0666);
     size_t bytes_read = read(fd, buffer, file_size);
     if (bytes_read == -1) {
+        close(fd);
         perror("read() error: ");
         handle_err("Failed to read the source file %s\n", file_path);
     }
+    close(fd);
 }
 
 Scanner *scanner_init(const char *file_path, Scanner *scanner)

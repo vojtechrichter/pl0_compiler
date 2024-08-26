@@ -21,9 +21,11 @@ int main(int argc, char **argv)
     Scanner *scanner = scanner_init(argv[1], &s);
 
     uint32_t *tokens = scanner_tokenize_source(scanner);
+    /*
     for (int i = 0; i < scanner->src_size; i++) {
         printf("%d\n", tokens[i]);
     }
+    */
 
     free(scanner->src_code);
     free(tokens);
